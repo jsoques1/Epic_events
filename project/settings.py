@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "rest_framework_simplejwt",
-    "users",
-    "crm",
+    'crm.apps.CrmConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -82,10 +82,12 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 50,
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
     ],
-    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    # "DEFAULT_PERMISSION_CLASSES": [
+    #     "rest_framework.permissions.AllowAny",
+    # ],
 }
 
 SIMPLE_JWT = {
@@ -95,28 +97,27 @@ SIMPLE_JWT = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbcrm',
-        'USER': 'postgres',
-        'PASSWORD': 'postsql',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    },
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DATABASE_NAME'),
+#         'USER': config('DATABASE_USER'),
+#         'PASSWORD': config('DATABASE_PASS'),
+#         'HOST': config('DATABASE_HOST'),
+#         'PORT': config('DATABASE_PORT'),
+#     },
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Custom user model
 
-AUTH_USER_MODEL = 'auth.User'
-
+AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -160,60 +161,27 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'format': {
+            'format': '{levelname} {module} {message} {asctime}',
+            'style': '{',
         },
     },
-    "formatters": {
-        "simple": {"format": "[%(asctime)s] %(levelname)s %(message)s", "datefmt": "%Y-%m-%d %H:%M:%S"},
-        "verbose": {
-            "format": "[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'traces.log',
+            'formatter': 'format',
         },
     },
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "filters": ["require_debug_true"],
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-        "development_logfile": {
-            "level": "DEBUG",
-            "filters": ["require_debug_true"],
-            "class": "logging.FileHandler",
-            "filename": "django_dev.log",
-            "formatter": "verbose",
-        },
-        "production_logfile": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": "django_production.log",
-            "maxBytes": 1024 * 1024 * 100,  # 100MB
-            "backupCount": 5,
-            "formatter": "simple",
-        },
-    },
-    "root": {
-        "level": "DEBUG",
-        "handlers": ["console", "development_logfile"],
-    },
-    "loggers": {
-        "eecrm": {
-            "handlers": ["development_logfile", "production_logfile"],
-        },
-        "django": {
-            "handlers": ["development_logfile", "production_logfile"],
-        },
-        "py.warnings": {
-            "handlers": ["development_logfile"],
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
         },
     },
 }
