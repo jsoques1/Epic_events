@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer, *args, **kwargs):
         request_data = serializer.data

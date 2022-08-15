@@ -9,5 +9,4 @@ users_router.register("users/", UserViewSet, basename='users')
 
 urlpatterns = [
     path("", TokenObtainPairView.as_view(), name="login"),
-    path("", include(users_router.urls)),
 ]
