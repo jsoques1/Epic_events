@@ -18,10 +18,10 @@ class HasCustomerPermissions(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.method == 'PUT' or request.method == 'DELETE':
-            return request.user.role == SALES and obj.is_client is False
+            return request.user.role == SALES
         elif request.user.role == SUPPORT and request.method in permissions.SAFE_METHODS:
             return obj in Customer.objects.filter(contract__event__support=request.user)
-        return request.user == obj.salesman or obj.is_client is False
+        return request.user == obj.salesman
 
 
 class HasContractPermissions(permissions.BasePermission):
@@ -51,7 +51,7 @@ class HasEventPermissions(permissions.BasePermission):
             return request.user == obj.support or request.user == obj.contract.salesman
         else:
             if obj.event_status is True:
-                raise PermissionDenied("Cannot update a finished event.")
+                raise PermissionDenied("The event has ended")
             if request.user.role == SUPPORT:
                 return request.user == obj.support
             return request.user == obj.contract.salesman
