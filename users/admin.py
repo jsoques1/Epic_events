@@ -22,6 +22,7 @@ class CustomUserAdmin(UserAdmin):
                     'mobile_number', 'role',)
 
 
+
 # @admin.register(LogEntry)
 # class LogEntryAdmin(admin.ModelAdmin):
 #     date_hierarchy = "action_time"

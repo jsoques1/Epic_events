@@ -11,7 +11,7 @@ class ClientAdmin(admin.ModelAdmin):
         ('Identity',
          {'fields': ('first_name', 'last_name', 'company_name', 'email', 'phone_number', 'mobile_number')}),
         ('Dates', {'fields': ('date_created', 'date_updated')}),
-        ('Client', {'fields': ['is_client']}),
+        ('Client', {'fields': ('is_client', 'salesman')}),
     )
     readonly_fields = ('date_created', 'date_updated')
     list_display = ('first_name', 'last_name', 'company_name', 'email', 'phone_number',
@@ -28,7 +28,7 @@ class ContractAdmin(admin.ModelAdmin):
         ('Info', {'fields': ('date_created', 'date_updated')})
     )
     readonly_fields = ('date_created', 'date_updated')
-    list_display = ('id', 'client', 'amount', 'payment_due', 'is_signed')
+    list_display = ('id', 'client', 'amount', 'payment_due', 'is_signed', 'salesman')
     list_filter = ['is_signed']
     search_fields = ('id', 'client__last_name')
 

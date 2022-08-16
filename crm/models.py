@@ -19,7 +19,7 @@ class Customer(models.Model):
     salesman = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        limit_choices_to={'role': MGMT},
+        limit_choices_to={'role': SALES},
         null=True,
     )
     is_client = models.BooleanField(default=False)

@@ -18,12 +18,7 @@ class TestPermissions(BasePermission):
 
 
 class IsManager(BasePermission):
-    """ Managers have read_only permissions on the crm.
-    Post, put or delete has to be done via the admin site.
-    """
-
     def has_permission(self, request, view):
-        print('IsManager')
         return request.user.role == MGMT
 
     def has_object_permission(self, request, view, obj):
