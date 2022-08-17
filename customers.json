@@ -11,7 +11,7 @@
       "company_name": "Company Plus",
       "date_created": "2022-08-15 16:32:06.745974+00",
       "date_updated": "2022-08-15 16:32:06.745974+00",
-      "salesman": 2,
+      "salesman": null,
       "is_client": true
     }
   },
@@ -27,7 +27,7 @@
       "company_name": "Dupont Comptabilité",
       "date_created": "2022-08-15 16:32:06.745974+00",
       "date_updated": "2022-08-15 16:32:06.745974+00",
-      "salesman": 2,
+      "salesman": null,
       "is_client": true
     }
   },
@@ -75,7 +75,7 @@
       "company_name": "Extra",
       "date_created": "2022-08-15 16:32:06.745974+00",
       "date_updated": "2022-08-15 16:32:06.745974+00",
-      "salesman": 5,
+      "salesman": null,
       "is_client": true
     }
   }
