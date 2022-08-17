@@ -18,10 +18,9 @@ class HasCustomerPermissions(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.method == 'PUT' or request.method == 'DELETE':
-            return request.user.role == SALES
-        elif request.user.role == SUPPORT and request.method in permissions.SAFE_METHODS:
-            return obj in Customer.objects.filter(contract__event__support=request.user)
-        return request.user == obj.salesman
+            return request.user.role == SALES and request.user == obj.salesman
+        else:
+            return True
 
 
 class HasContractPermissions(permissions.BasePermission):
@@ -31,13 +30,9 @@ class HasContractPermissions(permissions.BasePermission):
         return request.user.role == SALES
 
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
-            if request.user.role == SUPPORT:
-                return obj in Contract.objects.filter(event__support=request.user)
-            return request.user == obj.sales_contact
-        elif request.method == 'PUT' and obj.is_signed is True:
+        if request.method == 'PUT' and obj.is_signed is True:
             raise PermissionDenied("The contract is already signed")
-        return request.user == obj.salesman and obj.is_signed is False
+        return True
 
 
 class HasEventPermissions(permissions.BasePermission):

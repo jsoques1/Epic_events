@@ -25,7 +25,7 @@ class Customer(models.Model):
     is_client = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.company_name}"
+        return f"{self.company_name} - {self.first_name} {self.last_name}"
 
 
 class Contract(models.Model):
@@ -35,7 +35,7 @@ class Contract(models.Model):
         limit_choices_to={'role': SALES},
         null=True,
     )
-    client = models.ForeignKey(
+    customer = models.ForeignKey(
         Customer,
         on_delete=models.CASCADE,
         null=True,
@@ -48,8 +48,8 @@ class Contract(models.Model):
     is_signed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Contract #{self.id} - {self.client.first_name}" \
-               f"{self.client.last_name} - {self.client.company_name}"
+        return f"Contract #{self.id} - {self.customer.first_name}" \
+               f"{self.customer.last_name} - {self.customer.company_name}"
 
 
 class Event(models.Model):

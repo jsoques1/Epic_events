@@ -1,0 +1,82 @@
+[
+  {
+    "model": "crm.customer",
+    "pk": 1,
+    "fields": {
+      "first_name": "James",
+      "last_name": "Miller",
+      "email": "email@email.com",
+      "phone": "000000000000",
+      "mobile": "000000000000",
+      "company_name": "Company Plus",
+      "date_created": "2022-08-15 16:32:06.745974+00",
+      "date_updated": "2022-08-15 16:32:06.745974+00",
+      "salesman": 2,
+      "is_client": true
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 2,
+    "fields": {
+      "first_name": "Jean",
+      "last_name": "Dupont",
+      "email": "compta-dupont@email.com",
+      "phone": "000000000000",
+      "mobile": "000000000000",
+      "company_name": "Dupont Comptabilité",
+      "date_created": "2022-08-15 16:32:06.745974+00",
+      "date_updated": "2022-08-15 16:32:06.745974+00",
+      "salesman": 2,
+      "is_client": true
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 3,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Smith",
+      "email": "johnsmith@email.com",
+      "phone": "000000000000",
+      "mobile": "000000000000",
+      "company_name": "Company 3",
+      "date_created": "2022-08-15 16:32:06.745974+00",
+      "date_updated": "2022-08-15 16:32:06.745974+00",
+      "salesman": null,
+      "is_client": false
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 4,
+    "fields": {
+      "first_name": "Michel",
+      "last_name": "Leblanc",
+      "email": "mleblanc@leblancbotanique.fr",
+      "phone": "000000000000",
+      "mobile": "000000000000",
+      "company_name": "Leblanc Botanique",
+      "date_created": "2022-08-15 16:32:06.745974+00",
+      "date_updated": "2022-08-15 16:32:06.745974+00",
+      "salesman": null,
+      "is_client": false
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 5,
+    "fields": {
+      "first_name": "Extra",
+      "last_name": "Client",
+      "email": "mleblanc@leblancbotanique.fr",
+      "phone": "000000000000",
+      "mobile": "000000000000",
+      "company_name": "Extra",
+      "date_created": "2022-08-15 16:32:06.745974+00",
+      "date_updated": "2022-08-15 16:32:06.745974+00",
+      "salesman": 5,
+      "is_client": true
+    }
+  }
+]

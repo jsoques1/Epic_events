@@ -1,8 +1,8 @@
 from rest_framework.permissions import IsAuthenticated
-from .serializers import CustomerSerializer
 from users.permissions import IsManager
-from .permissions import HasCustomerPermissions
-from .models import Customer
+from .serializers import CustomerSerializer, ContractSerializer
+from .permissions import HasCustomerPermissions, HasContractPermissions
+from .models import Customer, Contract
 from users.models import User
 from rest_framework import status
 
@@ -39,7 +39,8 @@ class CustomerViewSet(ModelViewSet):
     def get_queryset(self):
         customer_pk = self.kwargs.get("pk")
         if customer_pk:
-            self.queryset = Customer.objects.filter(id=customer_pk)
+            if not Customer.objects.filter(id=customer_pk).exists():
+                raise ValidationError(f'No customer with id {customer_pk} exists')
         else:
             self.queryset = Customer.objects.all()
 
@@ -116,3 +117,19 @@ class CustomerViewSet(ModelViewSet):
         customer.delete()
         logger.info(f'Customer {company_name} by {self.request.user}')
         return Response({'message': f'Customer {company_name} deleted'}, status=status.HTTP_200_OK)
+
+
+class ContractViewSet(ModelViewSet):
+    queryset = Contract.objects.all()
+    serializer_class = ContractSerializer
+    permission_classes = [IsAuthenticated, IsManager | HasContractPermissions]
+
+    def get_queryset(self):
+        contract_pk = self.kwargs.get("pk")
+        if contract_pk:
+            if not Contract.objects.filter(id=contract_pk).exists():
+                raise ValidationError(f'No contract #{contract_pk} already exists')
+        else:
+            self.queryset = Contract.objects.all()
+
+        return self.queryset

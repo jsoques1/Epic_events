@@ -2,14 +2,15 @@
 from rest_framework import routers
 from django.urls import path, include
 
-from .views import CustomerViewSet
+from .views import CustomerViewSet, ContractViewSet
 
 crm_router = routers.SimpleRouter()
 crm_router.register('customers', CustomerViewSet, basename='customers')
-#
-# clients = routers.NestedSimpleRouter(router, r'clients', lookup='clients')
+crm_router.register('contracts', ContractViewSet, basename='contracts')
+
+# contracts = routers.NestedSimpleRouter(router, r'clients', lookup='clients')
 # clients.register('contracts', ClientsViewSet, basename='contracts')
-#
+
 # contracts = routers.NestedSimpleRouter(projects, r'contracts', lookup='contracts')
 # contracts.register('events', ClientsViewSet, basename='events')
 

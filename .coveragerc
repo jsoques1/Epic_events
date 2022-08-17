@@ -1,0 +1,9 @@
+[run]
+branch = True
+omit =
+    project/*
+    */__init__.py
+    */migrations/*
+    */urls.py
+    venv/*
+    manage.py
