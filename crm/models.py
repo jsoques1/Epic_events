@@ -22,7 +22,7 @@ class Customer(models.Model):
         limit_choices_to={'role': SALES},
         null=True,
     )
-    is_client = models.BooleanField(default=False)
+    is_signed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.company_name} - {self.first_name} {self.last_name}"
@@ -69,10 +69,10 @@ class Event(models.Model):
         limit_choices_to={'role': SUPPORT},
         null=True,
     )
-    event_status = models.BooleanField(default=False, verbose_name="Completed")
+    is_completed = models.BooleanField(default=False)
     attendees = models.PositiveIntegerField()
     event_date = models.DateTimeField()
     notes = models.TextField(max_length=800, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"Event {self.name} - {self.event_date}"

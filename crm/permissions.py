@@ -18,7 +18,7 @@ class HasCustomerPermissions(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.method == 'PUT' or request.method == 'DELETE':
-            return request.user.role == SALES and request.user == obj.salesman
+            return request.user.role == SALES
         else:
             return True
 
@@ -27,7 +27,7 @@ class HasContractPermissions(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.role == SUPPORT:
             return request.method in permissions.SAFE_METHODS
-        return request.user.role == SALES
+        return request.user.role == SALES and request.method == 'POST'
 
     def has_object_permission(self, request, view, obj):
         if request.method == 'PUT' and obj.is_signed is True:
@@ -37,16 +37,13 @@ class HasContractPermissions(permissions.BasePermission):
 
 class HasEventPermissions(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.user.team == SUPPORT:
-            return request.method in ['GET', 'PUT']
-        return request.user.role == SALES
+        if request.user.role == SUPPORT:
+            return request.method in ['GET', 'PUT', 'DELETE']
+        return request.user.role == SALES and request.method == 'POST'
 
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
-            return request.user == obj.support or request.user == obj.contract.salesman
-        else:
-            if obj.event_status is True:
-                raise PermissionDenied("The event has ended")
-            if request.user.role == SUPPORT:
-                return request.user == obj.support
-            return request.user == obj.contract.salesman
+        if request.method in 'PUT' and obj.is_completed is True:
+            raise PermissionDenied("The event has ended")
+        return request.user.role == SUPPORT
+
+
