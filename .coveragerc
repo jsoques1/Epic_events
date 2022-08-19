@@ -6,4 +6,5 @@ omit =
     */migrations/*
     */urls.py
     venv/*
+    */serializers.py
     manage.py

@@ -30,7 +30,7 @@ class TestLogin(APITestCase):
         )
 
     @pytest.mark.django_db
-    def test_login_ok(self):
+    def test_manager_login_ok(self):
         url = reverse("login")
         data = {"username": 'mgr', "password": 'mgr'}
         response = self.client.post(url, data, format="json")
@@ -40,29 +40,28 @@ class TestLogin(APITestCase):
         self.assertTrue("refresh" in response.data)
 
     @pytest.mark.django_db
-    def test_manager_get_customers_list(self):
+    def test_manager_login_wrong_password(self):
         url = reverse("login")
-        data = {"username": 'mgr', "password": 'mgr'}
+        data = {"username": 'mgr', "password": 'unknown'}
         response = self.client.post(url, data, format="json")
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
 
-        url = reverse("customers-list")
-        print(url)
-        response = self.client.get(url, format="json")
-        print(response.data['results'])
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     @pytest.mark.django_db
-    def test_manager_get_customer_detail(self):
+    def test_manager_login_wrong_token(self):
         url = reverse("login")
         data = {"username": 'mgr', "password": 'mgr'}
         response = self.client.post(url, data, format="json")
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
-
-        url = reverse("customers-detail", args=(1,))
-        print(url)
-        response = self.client.get(url, format="json")
-        print(response.data['results'])
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer 'token'")
+        url = reverse("customers-list")
+        response = self.client.get(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    @pytest.mark.django_db
+    def test_login_user_unknown(self):
+        url = reverse("login")
+        data = {"username": 'unknown', "password": 'unknown'}
+        response = self.client.post(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
