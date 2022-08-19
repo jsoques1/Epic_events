@@ -1,0 +1,82 @@
+[
+  {
+    "model": "crm.event",
+    "pk": 1,
+    "fields": {
+      "contract": 1,
+      "name": "Dairy Fairy",
+      "location": "London",
+      "date_created": "2022-02-26T15:00:28.520Z",
+      "date_updated": "2022-03-07T08:56:11.857Z",
+      "support": 2,
+      "is_completed": false,
+      "attendees": 160,
+      "event_date": "2022-03-06T17:00:00Z",
+      "notes": "Example note"
+    }
+  },
+  {
+    "model": "crm.event",
+    "pk": 2,
+    "fields": {
+      "contract": 2,
+      "name": "Daytona Racing",
+      "location": "Daytona",
+      "date_created": "2022-03-07T08:49:08.867Z",
+      "date_updated": "2022-03-07T14:06:24.861Z",
+      "support": null,
+      "is_completed": false,
+      "attendees": 60,
+      "event_date": "2022-09-17T16:00:00Z",
+      "notes": ""
+    }
+  },
+  {
+    "model": "crm.event",
+    "pk": 3,
+    "fields": {
+      "contract": 3,
+      "name": "All fame rodeo",
+      "location": "Kansas city",
+      "date_created": "2022-03-07T08:55:01.237Z",
+      "date_updated": "2022-03-07T08:55:01.237Z",
+      "support": 2,
+      "is_completed": true,
+      "attendees": 70,
+      "event_date": "2022-11-17T11:00:00Z",
+      "notes": "Note"
+    }
+  },
+    {
+    "model": "crm.event",
+    "pk": 4,
+    "fields": {
+      "contract": 4,
+      "name": "Blood collect",
+      "location": "New York",
+      "date_created": "2022-03-07T08:55:01.237Z",
+      "date_updated": "2022-03-07T08:55:01.237Z",
+      "support": 2,
+      "is_completed": false,
+      "attendees": 78,
+      "event_date": "2022-11-17T11:00:00Z",
+      "notes": "Note"
+    }
+  },
+  {
+    "model": "crm.event",
+    "pk": 5,
+    "fields": {
+      "contract": 5,
+      "name": "Skeleton contest",
+      "location": "San Francisco",
+      "date_created": "2022-02-26T15:00:28.520Z",
+      "date_updated": "2022-03-07T08:56:11.857Z",
+      "support": null,
+      "is_completed": false,
+      "attendees": 160,
+      "event_date": "2022-03-06T17:00:00Z",
+      "notes": ""
+    }
+  }
+]

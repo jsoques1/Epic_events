@@ -29,10 +29,6 @@ class TestLogin(APITestCase):
             role=SUPPORT,
         )
 
-    call_command('loaddata', 'users.json', verbosity=0)
-    call_command('loaddata', 'customers.json', verbosity=0)
-    call_command('loaddata', 'customers.json', verbosity=0)
-
     @pytest.mark.django_db
     def test_login_ok(self):
         url = reverse("login")

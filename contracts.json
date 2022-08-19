@@ -1,0 +1,67 @@
+[
+  {
+    "model": "crm.contract",
+    "pk": 1,
+    "fields": {
+      "salesman": 2,
+      "customer": 1,
+      "is_signed": true,
+      "date_created": "2022-08-15T17:00:00Z",
+      "date_updated": "2022-08-15T17:00:00Z",
+      "amount": 1000.0,
+      "payment_due": "2023-02-27"
+    }
+  },
+  {
+    "model": "crm.contract",
+    "pk": 2,
+    "fields": {
+      "salesman": 2,
+      "customer": 2,
+      "is_signed": false,
+      "date_created": "2022-08-15T17:00:00Z",
+      "date_updated": "2022-08-15T17:00:00Z",
+      "amount": 1234.56,
+      "payment_due": "2023-04-13"
+    }
+  },
+  {
+    "model": "crm.contract",
+    "pk": 3,
+    "fields": {
+      "salesman": 2,
+      "customer": 3,
+      "is_signed": true,
+      "date_created": "2022-08-15T17:00:00Z",
+      "date_updated": "2022-08-15T17:00:00Z",
+      "amount": 1000.5,
+      "payment_due": "2023-10-09"
+    }
+  },
+  {
+    "model": "crm.contract",
+    "pk": 4,
+    "fields": {
+      "salesman": 2,
+      "customer": 4,
+      "is_signed": true,
+      "date_created": "2022-08-15T17:00:00Z",
+      "date_updated": "2022-08-15T17:00:00Z",
+      "amount": 123.45,
+      "payment_due": "2023-10-09"
+    }
+  },
+  {
+    "model": "crm.contract",
+    "pk": 5,
+    "fields": {
+      "salesman": 2,
+      "customer": 5,
+      "is_signed": true,
+      "date_created": "2022-08-15T17:00:00Z",
+      "date_updated": "2022-08-15T17:00:00Z",
+      "amount": 1000.0,
+      "payment_due": "2023-02-27"
+    }
+  }
+]
