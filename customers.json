@@ -1,0 +1,82 @@
+[
+  {
+    "model": "crm.customer",
+    "pk": 1,
+    "fields": {
+      "first_name": "James",
+      "last_name": "Miller",
+      "email": "James.Miller@customer.com",
+      "phone_number": "000000000000",
+      "mobile_number": "000000000000",
+      "company_name": "MakeItFun",
+      "date_created": "2022-08-15T13:38:09.389Z",
+      "date_updated": "2022-08-15T13:38:09.389Z",
+      "salesman": null,
+      "is_signed": true
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 2,
+    "fields": {
+      "first_name": "Helen",
+      "last_name": "Hunt",
+      "email": "Helen.Hunt@customer.com",
+      "phone_number": "000000000000",
+      "mobile_number": "000000000000",
+      "company_name": "DaytonaRacing",
+      "date_created": "2022-08-15T13:38:09.389Z",
+      "date_updated": "2022-08-15T13:38:09.389Z",
+      "salesman": null,
+      "is_signed": true
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 3,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Smith",
+      "email": "John.Smith@customers.com",
+      "phone_number": "000000000000",
+      "mobile_number": "000000000000",
+      "company_name": "Gud",
+      "date_created": "2022-08-15T13:38:09.389Z",
+      "date_updated": "2022-08-15T13:38:09.389Z",
+      "salesman": null,
+      "is_signed": false
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 4,
+    "fields": {
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "Jane.Doe@customer.com",
+      "phone_number": "000000000000",
+      "mobile_number": "000000000000",
+      "company_name": "Graveyard",
+      "date_created": "2022-08-15T13:38:09.389Z",
+      "date_updated": "2022-08-15T13:38:09.389Z",
+      "salesman": null,
+      "is_signed": false
+    }
+  },
+  {
+    "model": "crm.customer",
+    "pk": 5,
+    "fields": {
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "Jane.Doe@customer.com",
+      "phone_number": "000000000000",
+      "mobile_number": "000000000000",
+      "company_name": "CedarHospital",
+      "date_created": "2022-08-15T13:38:09.389Z",
+      "date_updated": "2022-08-15T13:38:09.389Z",
+      "salesman": null,
+      "is_signed": true
+    }
+  }
+]
