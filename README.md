@@ -28,6 +28,8 @@ pip install -r requirements.txt
 
 ### Base de données
 
+Les données pour l'accès à la base de données via django se trouve dans le fichier .env du git/
+
 Créer la base de données avec SQL shell (psql) : 
 ```
 CREATE DATABASE dbcrm;
@@ -46,9 +48,6 @@ Créer un super utilisateur admin/EpicEvent1 :
 ```
 python manage.py createsuperuser
 ```
-
-Les données pour l'accès à la base de données via django se trouve dans le fichier .env du git/
-
 
 ## Traces du CRM
 
