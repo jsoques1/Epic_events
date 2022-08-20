@@ -9,9 +9,9 @@ logger = logging.getLogger(__name__)
 class Customer(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(max_length=50)
 
-    company_name = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=70)
     phone_number = models.CharField(max_length=20)
     mobile_number = models.CharField(max_length=20)
     date_created = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,989 @@
+{
+	"info": {
+		"_postman_id": "1f92bfde-a24d-4206-a324-c94ceaa96185",
+		"name": "EpicEvent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20394225"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "login admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU3MTA3MjE0LCJpYXQiOjE2NTcwMjA4MTQsImp0aSI6Ijc1OTA3MGM2ZTg0MTQ4Yzk4MTcxNWIxNmIwMDZmYzE4IiwidXNlcl9pZCI6MX0.lGhZcZkXBVlbB7h_zO-6gd8bPgDILDN5AveUsZIcAsM",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "username",
+								"value": "student",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "p@sswod2022",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								""
+							]
+						},
+						"description": "Lorsque l'utilisateur envoie une requête POST, si les données entrées sont valides, l'API renvoie un token d'accès JWT. Ce token permet l'accès à l'ensemble des points de terminaison pour une durée de 24 heures.\n\nCe token doit être utilisé comme Authentification dans le header des requêtes de cet API, sauf indication contraire.\n\n### PERMISSIONS\n\nAucune permission n'est requise pour accéder à ce point de terminaison."
+					},
+					"response": []
+				},
+				{
+					"name": "login salesman",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU3MTA3MjE0LCJpYXQiOjE2NTcwMjA4MTQsImp0aSI6Ijc1OTA3MGM2ZTg0MTQ4Yzk4MTcxNWIxNmIwMDZmYzE4IiwidXNlcl9pZCI6MX0.lGhZcZkXBVlbB7h_zO-6gd8bPgDILDN5AveUsZIcAsM",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "username",
+								"value": "student",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "p@sswod2022",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "salesman",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Epicevent1",
+									"type": "text"
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								""
+							]
+						},
+						"description": "Lorsque l'utilisateur envoie une requête POST, si les données entrées sont valides, l'API renvoie un token d'accès JWT. Ce token permet l'accès à l'ensemble des points de terminaison pour une durée de 24 heures.\n\nCe token doit être utilisé comme Authentification dans le header des requêtes de cet API, sauf indication contraire.\n\n### PERMISSIONS\n\nAucune permission n'est requise pour accéder à ce point de terminaison."
+					},
+					"response": []
+				},
+				{
+					"name": "login support",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU3MTA3MjE0LCJpYXQiOjE2NTcwMjA4MTQsImp0aSI6Ijc1OTA3MGM2ZTg0MTQ4Yzk4MTcxNWIxNmIwMDZmYzE4IiwidXNlcl9pZCI6MX0.lGhZcZkXBVlbB7h_zO-6gd8bPgDILDN5AveUsZIcAsM",
+								"type": "text"
+							},
+							{
+								"key": "username",
+								"value": "student",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "p@sswod2022",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "support",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Epicevent1",
+									"type": "text"
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								""
+							]
+						},
+						"description": "Lorsque l'utilisateur envoie une requête POST, si les données entrées sont valides, l'API renvoie un token d'accès JWT. Ce token permet l'accès à l'ensemble des points de terminaison pour une durée de 24 heures.\n\nCe token doit être utilisé comme Authentification dans le header des requêtes de cet API, sauf indication contraire.\n\n### PERMISSIONS\n\nAucune permission n'est requise pour accéder à ce point de terminaison."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/crm/customers/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"customers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customers create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "Foo",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Bar",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "Foo.Bar@graveyard.com",
+							"type": "text"
+						},
+						{
+							"key": "company_name",
+							"value": "Golfandco",
+							"type": "text"
+						},
+						{
+							"key": "phone_number",
+							"value": "33-123456789",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "33-623456789",
+							"type": "text"
+						},
+						{
+							"key": "is_client",
+							"value": "False",
+							"type": "text"
+						},
+						{
+							"key": "salesman",
+							"value": "2",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/customers/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"customers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customers retrieve",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/crm/customers/3/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"customers",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customers modify",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "John",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Doe",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "John.Doe@graveyard.com",
+							"type": "text"
+						},
+						{
+							"key": "company_name",
+							"value": "Tombstone",
+							"type": "text"
+						},
+						{
+							"key": "phone_number",
+							"value": "33-123456789",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "33-623456789",
+							"type": "text"
+						},
+						{
+							"key": "is_client",
+							"value": "True",
+							"type": "text"
+						},
+						{
+							"key": "salesman",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/customers/3/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"customers",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customers delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "John",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Doe",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "John.Doe@graveyard.com",
+							"type": "text"
+						},
+						{
+							"key": "company_name",
+							"value": "Graveyard",
+							"type": "text"
+						},
+						{
+							"key": "phone_number",
+							"value": "33-123456789",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "33-623456789",
+							"type": "text"
+						},
+						{
+							"key": "is_client",
+							"value": "True",
+							"type": "text"
+						},
+						{
+							"key": "salesman",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/customers/2/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"customers",
+						"2",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contracts list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/crm/contracts/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"contracts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contracts create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "customer",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "999",
+							"type": "text"
+						},
+						{
+							"key": "payment_due",
+							"value": "2022-10-01",
+							"type": "text"
+						},
+						{
+							"key": "is_signed",
+							"value": "False",
+							"type": "text"
+						},
+						{
+							"key": "salesman",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/contracts/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"contracts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contracts retrieve",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/crm/contracts/2/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"contracts",
+						"2",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contracts modify",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "customer",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "999",
+							"type": "text"
+						},
+						{
+							"key": "payment_due",
+							"value": "2022-10-01",
+							"type": "text"
+						},
+						{
+							"key": "is_signed",
+							"value": "True",
+							"type": "text"
+						},
+						{
+							"key": "salesman",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/contracts/3/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"contracts",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contracts delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "customer",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "999",
+							"type": "text"
+						},
+						{
+							"key": "payment_due",
+							"value": "2022-10-01",
+							"type": "text"
+						},
+						{
+							"key": "is_signed",
+							"value": "True",
+							"type": "text"
+						},
+						{
+							"key": "salesman",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/contracts/4/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"contracts",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/crm/events/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"events",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Daytona racinng",
+							"type": "text"
+						},
+						{
+							"key": "event_date",
+							"value": "2022-10-01 12:00:00",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Daytona",
+							"type": "text"
+						},
+						{
+							"key": "attendees",
+							"value": "10000",
+							"type": "text"
+						},
+						{
+							"key": "contract",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "notes",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "is_completed",
+							"value": "False",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/events/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"events",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event retrieve",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/crm/events/2/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"events",
+						"2",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event modify",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Daytona racinng",
+							"type": "text"
+						},
+						{
+							"key": "event_date",
+							"value": "2022-10-01 12:00:10",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Daytona",
+							"type": "text"
+						},
+						{
+							"key": "attendees",
+							"value": "3000",
+							"type": "text"
+						},
+						{
+							"key": "contract",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "notes",
+							"value": "Pink champagne ",
+							"type": "text"
+						},
+						{
+							"key": "is_completed",
+							"value": "False",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/events/4/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"events",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event support modify",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Daytona racinng",
+							"type": "text"
+						},
+						{
+							"key": "event_date",
+							"value": "2022-10-01 12:00:10",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "Daytona",
+							"type": "text"
+						},
+						{
+							"key": "attendees",
+							"value": "3000",
+							"type": "text"
+						},
+						{
+							"key": "support",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "contract",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "notes",
+							"value": "Pink champagne ",
+							"type": "text"
+						},
+						{
+							"key": "is_completed",
+							"value": "False",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/crm/events/4/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"events",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
