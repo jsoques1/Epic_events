@@ -77,9 +77,9 @@ https://documenter.getpostman.com/view/20394225/VUqpsHZu
 
 ## ERD
 
-Le diagramme est disponible dans le GIT sous forme PNG : 
+Le diagramme est disponible dans le GIT sous forme PDF : 
 
-ERD.drawio.png
+ERD.drawio.pdf
 
 
 ## Rapports
