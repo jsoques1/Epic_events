@@ -16,6 +16,7 @@ from users.models import MGMT, SALES, SUPPORT
 
 import logging
 logger = logging.getLogger(__name__)
+logger.info('start of logging')
 
 
 def check_salesman(request):
@@ -27,11 +28,11 @@ def check_salesman(request):
             if salesman.exists():
                 salesman = salesman[0]
                 if salesman.role != SALES:
-                    logger.error(f'The salesman {salesman} is invalid')
-                    raise ValidationError(f'The salesman {salesman} is invalid')
-                elif user != salesman:
-                    logger.error(f'The user {user} must be the salesman')
-                    raise ValidationError(f'The user {user} must be the salesman')
+                    logger.error(f'The user {salesman} is not a salesmane')
+                    raise ValidationError(f'The user {salesman} is not a salesman')
+                # elif user != salesman:
+                #     logger.error(f'The user {user} must be the salesman')
+                #     raise ValidationError(f'The user {user} must be the salesman')
 
 
 class CustomerViewSet(ModelViewSet):
@@ -45,7 +46,10 @@ class CustomerViewSet(ModelViewSet):
             if not Customer.objects.filter(id=customer_pk).exists():
                 logger.error(f'No customer with id {customer_pk} exists')
                 raise ValidationError(f'No customer with id {customer_pk} exists')
+            else:
+                logger.info(f'Info for customer id {customer_pk} request by {self.request.user}')
         else:
+            logger.info(f'Customer list request by {self.request.user}')
             self.queryset = Customer.objects.all()
 
         return self.queryset
@@ -54,8 +58,8 @@ class CustomerViewSet(ModelViewSet):
         request_data = self.request.data
         customer = Customer.objects.filter(company_name=request_data['company_name'])
         if customer.exists():
-            logger.error(f'A customer {customer} already exists')
-            raise ValidationError(f'A customer {customer} already exists')
+            logger.error(f'A customer {customer[0]} already exists')
+            raise ValidationError(f'A customer {customer[0]} already exists')
 
         try:
             check_salesman(self.request)
@@ -72,8 +76,6 @@ class CustomerViewSet(ModelViewSet):
 
     def perform_update(self, serializer, *args, **kwargs):
         instance = self.get_object()  # instance before update
-        print(instance)
-        print(serializer.validated_data['company_name'])
         if serializer.is_valid(raise_exception=True):
             if instance.company_name != serializer.validated_data['company_name']:
                 if Customer.objects.filter(company_name=serializer.validated_data['company_name']).exists():
@@ -114,7 +116,10 @@ class ContractViewSet(ModelViewSet):
             if not Contract.objects.filter(id=contract_pk).exists():
                 logger.error(f'No contract #{contract_pk} exists')
                 raise ValidationError(f'No contract #{contract_pk} exists')
+            else:
+                logger.info(f'Info for contract id {contract_pk} request by {self.request.user}')
         else:
+            logger.info(f'Contract list request by {self.request.user}')
             self.queryset = Contract.objects.all()
 
         return self.queryset
@@ -178,7 +183,10 @@ class EventViewSet(ModelViewSet):
             if not Event.objects.filter(id=event_pk).exists():
                 logger.error(f'No event #{event_pk} exists')
                 raise ValidationError(f'No event #{event_pk} exists')
+            else:
+                logger.info(f'Info for event id {event_pk} request by {self.request.user}')
         else:
+            logger.info(f'Event list request by {self.request.user}')
             self.queryset = Event.objects.all()
 
         return self.queryset
@@ -228,7 +236,6 @@ class EventViewSet(ModelViewSet):
         if serializer.is_valid(raise_exception=True):
             name = serializer.validated_data['name']
             event_date = serializer.validated_data['event_date']
-            print(event_date)
             if event_date < timezone.now():
                 logger.error(f'Event date {event_date} is elapsed')
                 raise ValidationError(f'Event date {event_date} is elapsed')

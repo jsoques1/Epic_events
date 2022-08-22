@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-from decouple import Csv, config
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -163,8 +163,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'format': {
-            'format': '{levelname} {module} {message} {asctime}',
-            'style': '{',
+            "format": "[%(asctime)s] %(levelname)s %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
     'handlers': {
@@ -176,10 +176,14 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
+        # 'django': {
+        #     'handlers': ['file'],
+        #     'level': 'ERROR',
+        #     'propagate': True,
+        # },
+        '': {
+            'level': 'DEBUG',
             'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
         },
     },
 }
