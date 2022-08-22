@@ -2,11 +2,9 @@ import pytest
 from django.core.management import call_command
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
-from crm.models import Customer, Contract, Event
+from crm.models import Customer
 from users.models import User, MGMT, SALES, SUPPORT
 from rest_framework import status
-from time import sleep
-from collections import OrderedDict
 import json
 from django.core import serializers
 

@@ -1,7 +1,6 @@
 from rest_framework import permissions
 from rest_framework.permissions import BasePermission
 from rest_framework.exceptions import PermissionDenied
-from .models import Customer, Contract
 
 
 from users.models import SALES, SUPPORT
@@ -45,5 +44,3 @@ class HasEventPermissions(permissions.BasePermission):
         if request.method in 'PUT' and obj.is_completed is True:
             raise PermissionDenied("The event has ended")
         return request.user.role == SUPPORT
-
-

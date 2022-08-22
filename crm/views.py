@@ -8,7 +8,6 @@ from .permissions import HasCustomerPermissions, HasContractPermissions, HasEven
 from .models import Customer, Contract, Event
 from users.models import User
 from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
@@ -61,6 +60,7 @@ class CustomerViewSet(ModelViewSet):
         try:
             check_salesman(self.request)
         except Exception as e:
+            logger.error(e)
             raise
 
         serializer = CustomerSerializer(data=request_data)
@@ -83,6 +83,7 @@ class CustomerViewSet(ModelViewSet):
             try:
                 check_salesman(self.request)
             except Exception as e:
+                logger.error(e)
                 raise
 
             serializer.save()
@@ -92,6 +93,7 @@ class CustomerViewSet(ModelViewSet):
         try:
             check_salesman(self.request)
         except Exception as e:
+            logger.error(e)
             raise
 
         customer = self.get_object()
@@ -123,7 +125,7 @@ class ContractViewSet(ModelViewSet):
         if salesman.role != SALES:
             logger.error(f"Salesman id#{salesman.id} {salesman.username} does not belong to the SALES team")
             raise ValidationError(f"Salesman id#{salesman.id} {salesman.username} does not belong to the SALES team")
-        
+
         if serializer.is_valid(raise_exception=True):
             customer = serializer.validated_data['customer']
             is_signed = serializer.validated_data['is_signed']
@@ -149,8 +151,8 @@ class ContractViewSet(ModelViewSet):
             if is_signed and not customer.is_signed:
                 customer.is_signed = True
             if salesman != serializer.validated_data['salesman'] and self.request_user.role != MGMT:
-                logger.error(f'Salesman reassignment can be done only by MGMT team')
-                raise ValidationError(f'Salesman reassignment can be done only by MGMT team')
+                logger.error('Salesman reassignment can be done only by MGMT team')
+                raise ValidationError('Salesman reassignment can be done only by MGMT team')
             customer.save()
             serializer.save()
             logger.info(f'Contract #{instance.id} '
@@ -196,11 +198,11 @@ class EventViewSet(ModelViewSet):
                                   f"at {request_data['name']} is not signed yet")
 
         if self.request.user.role != MGMT and request_data.get('support'):
-            logger.error(f"Support must be assigned by the MGMT team")
-            raise ValidationError(f"Support must be assigned by the MGMT team")
+            logger.error("Support must be assigned by the MGMT team")
+            raise ValidationError("Support must be assigned by the MGMT team")
         elif self.request.user.role == MGMT and not request_data.get('support'):
-            logger.error(f"Support must be filled")
-            raise ValidationError(f"Support must be filled")
+            logger.error("Support must be filled")
+            raise ValidationError("Support must be filled")
         elif request_data.get('support'):
             support = Event.objects.filter(support=request_data['support'])
             if support.exists() and support.role != SUPPORT:
@@ -232,11 +234,11 @@ class EventViewSet(ModelViewSet):
                 raise ValidationError(f'Event date {event_date} is elapsed')
             support = serializer.validated_data.get('support')
             if event.support != support and self.request.user.role != MGMT:
-                logger.error(f'Contract reassignment can be done only by MGMT team')
-                raise ValidationError(f'Support reassignment can be done only by MGMT team')
+                logger.error('Contract reassignment can be done only by MGMT team')
+                raise ValidationError('Support reassignment can be done only by MGMT team')
             if event.contract != serializer.validated_data['contract'] and self.request.user.role != MGMT:
-                logger.error(f'Contract reassignment can be done only by MGMT team')
-                raise ValidationError(f'Contract reassignment can be done only by MGMT team')
+                logger.error('Contract reassignment can be done only by MGMT team')
+                raise ValidationError('Contract reassignment can be done only by MGMT team')
             serializer.save()
             logger.info(f'The event {name} at {event_date} updated by {self.request.user}')
 

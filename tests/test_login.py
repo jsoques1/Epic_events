@@ -1,8 +1,6 @@
 import pytest
-from django.core.management import call_command
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
-from crm.models import Customer, Contract, Event
 from users.models import User, MGMT, SALES, SUPPORT
 from rest_framework import status
 
@@ -54,7 +52,7 @@ class TestLogin(APITestCase):
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer 'token'")
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer 'token'")
         url = reverse("customers-list")
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
