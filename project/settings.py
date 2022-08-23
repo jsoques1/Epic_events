@@ -83,9 +83,6 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
-    # "DEFAULT_PERMISSION_CLASSES": [
-    #     "rest_framework.permissions.AllowAny",
-    # ],
 }
 
 SIMPLE_JWT = {
@@ -163,7 +160,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'format': {
-            "format": "[%(asctime)s] %(levelname)s %(message)s",
+            "format": "[%(asctime)s] [%(name)s] %(levelname)s - %(message)s",
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
@@ -176,11 +173,6 @@ LOGGING = {
         },
     },
     'loggers': {
-        # 'django': {
-        #     'handlers': ['file'],
-        #     'level': 'ERROR',
-        #     'propagate': True,
-        # },
         '': {
             'level': 'DEBUG',
             'handlers': ['file'],

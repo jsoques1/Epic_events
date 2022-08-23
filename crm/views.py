@@ -16,7 +16,6 @@ from users.models import MGMT, SALES, SUPPORT
 
 import logging
 logger = logging.getLogger(__name__)
-logger.info('start of logging')
 
 
 def check_salesman(request):

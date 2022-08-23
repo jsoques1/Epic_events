@@ -7,10 +7,11 @@ from users.models import User, MGMT, SALES, SUPPORT
 from rest_framework import status
 import json
 from django.core import serializers
+import time
 
 
 class TestCustomer(APITestCase):
-    @pytest.mark.django_db
+    @pytest.mark.django_db()
     def setUp(self):
 
         User.objects.create_user(
@@ -52,15 +53,23 @@ class TestCustomer(APITestCase):
         call_command('loaddata', 'contracts.json', verbosity=0)
         call_command('loaddata', 'events.json', verbosity=0)
 
-    # @pytest.mark.django_db
-    # def test_login_ok(self):
-    #     url = reverse("login")
-    #     data = {"username": 'mgr', "password": 'mgr'}
-    #     response = self.client.post(url, data, format="json")
-    #     self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertTrue("access" in response.data)
-    #     self.assertTrue("refresh" in response.data)
+    def check_login(self, username, password):
+        data = {"username": username, "password": password}
+        response = self.client.post('/login', data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("access" in response.data)
+        self.assertTrue("refresh" in response.data)
+
+    @pytest.mark.django_db
+    def test_login_ok(self):
+        url = reverse("login")
+        data = {"username": 'mgr', "password": 'mgr'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("access" in response.data)
+        self.assertTrue("refresh" in response.data)
     #
     # @pytest.mark.django_db
     # def test_1_manager_get_customers_list(self):
@@ -225,19 +234,366 @@ class TestCustomer(APITestCase):
     #         self.assertEqual(response.data['is_signed'], serialized_fields['is_signed'])
     #         self.assertEqual(response.data['salesman'], serialized_fields['salesman'])
 
-    def test_3_manager_create_client(self):
+    @pytest.mark.django_db()
+    def test_3a_manager_prospect_CRUD(self):
         url = reverse("login")
         data = {"username": 'mgr', "password": 'mgr'}
         response = self.client.post(url, data, format="json")
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
         data = {
-            'first_name': 'new_customer',
-            'last_name': 'new_customer',
-            'email': 'new_customer@email.com',
+            'first_name': 'prospect',
+            'last_name': 'prospect',
+            'email': 'prospect@email.com',
+            'company_name': 'new_prospect',
             'phone_number': '0000000000',
             'mobile_number': '0000000000',
+            'is_signed': False,
             'salesman': 2,
-            'is_signed': False
         }
-        response = self.client.post(url, data, format='json')
+        response = self.client.post('/crm/customers/', data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data, data)
+        print(Customer.objects.filter())
+
+    # @pytest.mark.django_db()
+    # def test_3b_manager_get_customers_number(self):
+        url = reverse("login")
+        data = {"username": 'mgr', "password": 'mgr'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+
+        url = reverse("customers-list")
+        response = self.client.get('/crm/customers/', format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+        print(len(response.data['results']))
+
+    # @pytest.mark.django_db()
+    # def test_3b_manager_modify_prospect(self):
+        url = reverse("login")
+        data = {"username": 'mgr', "password": 'mgr'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'id': 6,
+            'first_name': 'modified_prospect',
+            'last_name': 'modified_prospect',
+            'email': 'modified_prospect@email.com',
+            'company_name': 'modified_prospect',
+            'phone_number': '111111111',
+            'mobile_number': '111111111',
+            'is_signed': True,
+            'salesman': 2
+        }
+        response = self.client.put('/crm/customers/6/', data, format='json')
+        print(response.data)
+        print(data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # self.assertEqual(response.data, data)
+        response = self.client.delete('/crm/customers/6/', data, format='json')
+
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    @pytest.mark.django_db()
+    def test_3b_manager_client_CRUD(self):
+        url = reverse("login")
+        data = {"username": 'mgr', "password": 'mgr'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'first_name': 'prospect',
+            'last_name': 'prospect',
+            'email': 'prospect@email.com',
+            'company_name': 'new_prospect',
+            'phone_number': '0000000000',
+            'mobile_number': '0000000000',
+            'is_signed': True,
+            'salesman': 2,
+        }
+        response = self.client.post('/crm/customers/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data, data)
+        print(Customer.objects.filter())
+
+        # @pytest.mark.django_db()
+        # def test_3b_manager_get_customers_number(self):
+        url = reverse("login")
+        data = {"username": 'mgr', "password": 'mgr'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+
+        url = reverse("customers-list")
+        response = self.client.get('/crm/customers/', format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+        print(len(response.data['results']))
+
+        # @pytest.mark.django_db()
+        # def test_3b_manager_modify_prospect(self):
+        url = reverse("login")
+        data = {"username": 'mgr', "password": 'mgr'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'id': 6,
+            'first_name': 'modified_prospect',
+            'last_name': 'modified_prospect',
+            'email': 'modified_prospect@email.com',
+            'company_name': 'modified_prospect',
+            'phone_number': '111111111',
+            'mobile_number': '111111111',
+            'is_signed': False,
+            'salesman': 2
+        }
+        response = self.client.put('/crm/customers/6/', data, format='json')
+        print(response.data)
+        print(data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # self.assertEqual(response.data, data)
+        response = self.client.delete('/crm/customers/6/', data, format='json')
+
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    @pytest.mark.django_db()
+    def test_4a_sales_prospect_CRUD(self):
+        url = reverse("login")
+        data = {"username": 'sales1', "password": 'sales1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'first_name': 'prospect',
+            'last_name': 'prospect',
+            'email': 'prospect@email.com',
+            'company_name': 'new_prospect',
+            'phone_number': '0000000000',
+            'mobile_number': '0000000000',
+            'is_signed': False,
+            'salesman': 2,
+        }
+        response = self.client.post('/crm/customers/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data, data)
+        print(Customer.objects.filter())
+
+    # @pytest.mark.django_db()
+    # def test_3b_manager_get_customers_number(self):
+        url = reverse("login")
+        data = {"username": 'sales1', "password": 'sales1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+
+        url = reverse("customers-list")
+        response = self.client.get('/crm/customers/', format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+        print(len(response.data['results']))
+
+    # @pytest.mark.django_db()
+    # def test_3b_manager_modify_prospect(self):
+        url = reverse("login")
+        data = {"username": 'sales1', "password": 'sales1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'id': 6,
+            'first_name': 'modified_prospect',
+            'last_name': 'modified_prospect',
+            'email': 'modified_prospect@email.com',
+            'company_name': 'modified_prospect',
+            'phone_number': '111111111',
+            'mobile_number': '111111111',
+            'is_signed': True,
+            'salesman': 2
+        }
+        response = self.client.put('/crm/customers/6/', data, format='json')
+        print(response.data)
+        print(data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # self.assertEqual(response.data, data)
+        response = self.client.delete('/crm/customers/6/', data, format='json')
+
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    @pytest.mark.django_db()
+    def test_4b_sales_client_CRUD(self):
+        url = reverse("login")
+        data = {"username": 'sales1', "password": 'sales1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'first_name': 'prospect',
+            'last_name': 'prospect',
+            'email': 'prospect@email.com',
+            'company_name': 'new_prospect',
+            'phone_number': '0000000000',
+            'mobile_number': '0000000000',
+            'is_signed': True,
+            'salesman': 2,
+        }
+        response = self.client.post('/crm/customers/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data, data)
+        print(Customer.objects.filter())
+
+        # @pytest.mark.django_db()
+        # def test_3b_manager_get_customers_number(self):
+        url = reverse("login")
+        data = {"username": 'sales1', "password": 'sales1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+
+        url = reverse("customers-list")
+        response = self.client.get('/crm/customers/', format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+        print(len(response.data['results']))
+
+        # @pytest.mark.django_db()
+        # def test_3b_manager_modify_prospect(self):
+        url = reverse("login")
+        data = {"username": 'sales1', "password": 'sales1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'id': 6,
+            'first_name': 'modified_prospect',
+            'last_name': 'modified_prospect',
+            'email': 'modified_prospect@email.com',
+            'company_name': 'modified_prospect',
+            'phone_number': '111111111',
+            'mobile_number': '111111111',
+            'is_signed': False,
+            'salesman': 2
+        }
+        response = self.client.put('/crm/customers/6/', data, format='json')
+        print(response.data)
+        print(data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # self.assertEqual(response.data, data)
+        response = self.client.delete('/crm/customers/6/', data, format='json')
+
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    @pytest.mark.django_db()
+    def test_5a_support_prospect_CRUD(self):
+        url = reverse("login")
+        data = {"username": 'support1', "password": 'support1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'first_name': 'prospect',
+            'last_name': 'prospect',
+            'email': 'prospect@email.com',
+            'company_name': 'new_prospect',
+            'phone_number': '0000000000',
+            'mobile_number': '0000000000',
+            'is_signed': False,
+            'salesman': 2,
+        }
+        response = self.client.post('/crm/customers/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        print(Customer.objects.filter())
+
+    # @pytest.mark.django_db()
+    # def test_3b_manager_get_customers_number(self):
+        url = reverse("login")
+        data = {"username": 'support1', "password": 'support1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+
+        url = reverse("customers-list")
+        response = self.client.get('/crm/customers/', format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+        print(len(response.data['results']))
+
+    # @pytest.mark.django_db()
+    # def test_3b_manager_modify_prospect(self):
+        url = reverse("login")
+        data = {"username": 'support1', "password": 'support1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'id': 6,
+            'first_name': 'modified_prospect',
+            'last_name': 'modified_prospect',
+            'email': 'modified_prospect@email.com',
+            'company_name': 'modified_prospect',
+            'phone_number': '111111111',
+            'mobile_number': '111111111',
+            'is_signed': True,
+            'salesman': 2
+        }
+        response = self.client.put('/crm/customers/6/', data, format='json')
+        print(response.data)
+        print(data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        # self.assertEqual(response.data, data)
+        response = self.client.delete('/crm/customers/6/', data, format='json')
+
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    @pytest.mark.django_db()
+    def test_5b_support_client_CRUD(self):
+        url = reverse("login")
+        data = {"username": 'support1', "password": 'support1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'first_name': 'prospect',
+            'last_name': 'prospect',
+            'email': 'prospect@email.com',
+            'company_name': 'new_prospect',
+            'phone_number': '0000000000',
+            'mobile_number': '0000000000',
+            'is_signed': True,
+            'salesman': 2,
+        }
+        response = self.client.post('/crm/customers/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        print(Customer.objects.filter())
+
+        # @pytest.mark.django_db()
+        # def test_3b_manager_get_customers_number(self):
+        url = reverse("login")
+        data = {"username": 'support1', "password": 'support1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+
+        url = reverse("customers-list")
+        response = self.client.get('/crm/customers/', format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+        print(len(response.data['results']))
+
+        # @pytest.mark.django_db()
+        # def test_3b_manager_modify_prospect(self):
+        url = reverse("login")
+        data = {"username": 'support1', "password": 'support1'}
+        response = self.client.post(url, data, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+        data = {
+            'id': 6,
+            'first_name': 'modified_prospect',
+            'last_name': 'modified_prospect',
+            'email': 'modified_prospect@email.com',
+            'company_name': 'modified_prospect',
+            'phone_number': '111111111',
+            'mobile_number': '111111111',
+            'is_signed': False,
+            'salesman': 2
+        }
+        response = self.client.put('/crm/customers/6/', data, format='json')
+        print(response.data)
+        print(data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        # self.assertEqual(response.data, data)
+        response = self.client.delete('/crm/customers/6/', data, format='json')
+
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
