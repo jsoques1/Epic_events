@@ -27,15 +27,23 @@ class TestLogin(APITestCase):
             role=SUPPORT,
         )
 
-    @pytest.mark.django_db
-    def test_manager_login_ok(self):
+    def check_login(self, username, password):
         url = reverse("login")
-        data = {"username": 'mgr', "password": 'mgr'}
+        data = {"username": username, "password": password}
         response = self.client.post(url, data, format="json")
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("access" in response.data)
         self.assertTrue("refresh" in response.data)
+
+    def test_1_manager_login_ok(self):
+        self.check_login('mgr', 'mgr')
+
+    def test_1_sales_login_ok(self):
+        self.check_login('sales', 'sales')
+
+    def test_1_support_login_ok(self):
+        self.check_login('support', 'support')
 
     @pytest.mark.django_db
     def test_manager_login_wrong_password(self):

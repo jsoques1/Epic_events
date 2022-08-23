@@ -25,7 +25,7 @@ class Customer(models.Model):
     is_signed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"id {self.id} : {self.company_name} - {self.first_name} {self.last_name}"
+        return f"{self.company_name} - {self.first_name} {self.last_name}"
 
 
 class Contract(models.Model):
