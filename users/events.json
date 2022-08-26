@@ -41,7 +41,7 @@
       "date_created": "2022-03-07T08:55:01.237Z",
       "date_updated": "2022-03-07T08:55:01.237Z",
       "support": 2,
-      "is_completed": true,
+      "is_completed": false,
       "attendees": 70,
       "event_date": "2023-01-10 12:00:00",
       "notes": "Note"

@@ -11,9 +11,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from rest_framework.viewsets import ModelViewSet
 from users.models import MGMT, SALES, SUPPORT
-
+from rest_framework.viewsets import ModelViewSet
 import logging
 logger = logging.getLogger(__name__)
 
@@ -125,7 +124,7 @@ class ContractViewSet(ModelViewSet):
 
     def perform_create(self, serializer, *args, **kwargs):
         request_data = self.request.data
-        salesman = Contract.objects.get(salesman=request_data['salesman'])
+        salesman = User.objects.get(id=request_data['salesman'])
         if salesman.role != SALES:
             logger.error(f"Salesman id#{salesman.id} {salesman.username} does not belong to the SALES team")
             raise ValidationError(f"Salesman id#{salesman.id} {salesman.username} does not belong to the SALES team")
@@ -135,10 +134,12 @@ class ContractViewSet(ModelViewSet):
             is_signed = serializer.validated_data['is_signed']
             if is_signed and not customer.is_signed:
                 customer.is_signed = True
+                logger.warning(f"contract #{serializer.data['id']} is signed, "
+                               f"so the prospect {customer.username} is set automatically as a customer")
                 customer.save()
             serializer.save()
 
-        logger.info(f'Contract #{serializer.validated_data["id"]} '
+        logger.info(f'Contract #{serializer.data["id"]} '
                     f'{serializer.validated_data["customer"]} added by {self.request.user}')
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -184,6 +185,7 @@ class EventViewSet(ModelViewSet):
                 raise ValidationError(f'No event #{event_pk} exists')
             else:
                 logger.info(f'Info for event id {event_pk} request by {self.request.user}')
+                self.queryset = Event.objects.filter(id=int(event_pk))
         else:
             logger.info(f'Event list request by {self.request.user}')
             self.queryset = Event.objects.all()
@@ -208,17 +210,9 @@ class EventViewSet(ModelViewSet):
             logger.error("Support must be assigned by the MGMT team")
             raise ValidationError("Support must be assigned by the MGMT team")
         elif self.request.user.role == MGMT and not request_data.get('support'):
-            logger.error("Support must be filled")
-            raise ValidationError("Support must be filled")
-        elif request_data.get('support'):
-            support = Event.objects.filter(support=request_data['support'])
-            if support.exists() and support.role != SUPPORT:
-                logger.error(f"Support id#{support.id} {support.username} "
-                             f"does not belong to the SUPPORT team")
-                raise ValidationError(f"Support id#{support.id} {support.username} "
-                                      f"does not belong to the SUPPORT team")
-
-        if datetime.strptime(request_data['event_date'], '%Y-%m-%d %H:%M:%S') < timezone.now():
+            logger.warning("Support must be filled after creation by a manager")
+        event_date = datetime.strptime(request_data['event_date'], "%Y-%m-%d %H:%M:%S")
+        if event_date < timezone.now():
             logger.error(f'Event date {request_data["event_date"]} is elapsed')
             raise ValidationError(f'Event date {request_data["event_date"]} is elapsed')
 
@@ -230,33 +224,48 @@ class EventViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer, *args, **kwargs):
-
         event = self.get_object()  # instance before update
+
         if serializer.is_valid(raise_exception=True):
             name = serializer.validated_data['name']
             event_date = serializer.validated_data['event_date']
+
             if event_date < timezone.now():
                 logger.error(f'Event date {event_date} is elapsed')
                 raise ValidationError(f'Event date {event_date} is elapsed')
             support = serializer.validated_data.get('support')
-            if event.support != support and self.request.user.role != MGMT:
-                logger.error('Contract reassignment can be done only by MGMT team')
+
+            if support and self.request.user.role == MGMT:
+                user = User.objects.filter(id=serializer.validated_data['support'].id)[0]
+                if support and user.role != SUPPORT:
+                    logger.error(f"Support id#{support.id} {user.username} "
+                                 f"does not belong to the SUPPORT team")
+                    raise ValidationError(f"Support id#{support.id} {user.username} "
+                                          f"does not belong to the SUPPORT team")
+
+            if event.support and event.support != support and self.request.user.role != MGMT:
+                logger.error('Support (re)assignment can be done only by MGMT team')
                 raise ValidationError('Support reassignment can be done only by MGMT team')
+
             if event.contract != serializer.validated_data['contract'] and self.request.user.role != MGMT:
-                logger.error('Contract reassignment can be done only by MGMT team')
+                logger.error('Contract (re)assignment can be done only by MGMT team')
                 raise ValidationError('Contract reassignment can be done only by MGMT team')
             serializer.save()
             logger.info(f'The event {name} at {event_date} updated by {self.request.user}')
+            return Response({'message': f'Event {name} at {event_date} updated'}, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs):
         event = self.get_object()
         name = event.name
         event_date = event.event_date
         user = User.objects.get(id=request.user.id)
-        if user.role == SALES and event.is_completed is False:
-            logger.info(f"The event {name} at {event_date} is not set as completed")
-            raise ValidationError(f"The event {name} at {event_date} is not set as completed")
+        if user.role == SUPPORT and event.is_completed is False:
+            logger.info(f"The event {name} at {event_date} is not yet completed")
+            raise ValidationError(f"The event {name} at {event_date} is not yet completed")
 
         logger.info(f'Event {name} at {event_date} deleted by {self.request.user}')
+        contract = event.contract
         event.delete()
+        contract.delete()
+        logger.warning(f'Event {name} has been deleted, the contract has been automatically deleted as well')
         return Response({'message': f'Event {name} at {event_date} deleted'}, status=status.HTTP_200_OK)
