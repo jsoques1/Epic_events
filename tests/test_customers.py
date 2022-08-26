@@ -7,7 +7,6 @@ from users.models import User, MGMT, SALES, SUPPORT
 from rest_framework import status
 import json
 from django.core import serializers
-import time
 
 
 class TestCustomer(APITestCase):
@@ -63,6 +62,7 @@ class TestCustomer(APITestCase):
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
+
         for customer in response.data['results']:
             customer = dict(customer)
             db_customer = Customer.objects.get(id=customer['id'])
@@ -129,7 +129,7 @@ class TestCustomer(APITestCase):
             self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         response = self.client.get('/crm/customers/', format="json")
-        # if crud_status['R']:
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data['results']), len(Customer.objects.all()))
 

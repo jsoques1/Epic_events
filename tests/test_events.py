@@ -2,7 +2,7 @@ import pytest
 from django.core.management import call_command
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
-from crm.models import Event, Contract
+from crm.models import Event
 from users.models import User, MGMT, SALES, SUPPORT
 from rest_framework import status
 import json

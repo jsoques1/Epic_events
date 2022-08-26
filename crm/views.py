@@ -49,6 +49,8 @@ class CustomerViewSet(ModelViewSet):
         else:
             logger.info(f'Customer list request by {self.request.user}')
             self.queryset = Customer.objects.all()
+            for customer in self.queryset:
+                logger.info(customer)
 
         return self.queryset
 
@@ -119,6 +121,8 @@ class ContractViewSet(ModelViewSet):
         else:
             logger.info(f'Contract list request by {self.request.user}')
             self.queryset = Contract.objects.all()
+            for contract in self.queryset:
+                logger.info(contract)
 
         return self.queryset
 
@@ -189,7 +193,8 @@ class EventViewSet(ModelViewSet):
         else:
             logger.info(f'Event list request by {self.request.user}')
             self.queryset = Event.objects.all()
-
+            for event in self.queryset:
+                logger.info(event)
         return self.queryset
 
     def perform_create(self, serializer, *args, **kwargs):

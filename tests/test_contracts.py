@@ -7,7 +7,6 @@ from users.models import User, MGMT, SALES, SUPPORT
 from rest_framework import status
 import json
 from django.core import serializers
-import time
 
 
 class TestContract(APITestCase):
