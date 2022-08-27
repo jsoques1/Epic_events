@@ -190,6 +190,41 @@ class TestEvent(APITestCase):
         else:
             self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+    def check_creation_event_date_NOK(self, username, password):
+        url = reverse("login")
+
+        data_user = {"username": username, "password": password}
+
+        response = self.client.post(url, data_user, format="json")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {response.data['access']}")
+
+        data = {
+            'salesman': 2,
+            'customer': 1,
+            'amount': 1000.0,
+            'is_signed': True,
+            'company_name': 'test',
+            'payment_due': '2023-02-27'
+        }
+
+        response = self.client.post('/crm/contracts/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        data = {
+            'id': 6,
+            'contract': 6,
+            'support': 3,
+            'name': 'La foire a 2 euros',
+            'event_date': '2020-01-10 12:00:00',
+            'location': 'Passy',
+            'attendees': '10000',
+            'notes': 'Pink Champagne only',
+            'is_completed': False,
+        }
+
+        response = self.client.post('/crm/events/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_1_manager_get_events_list(self):
         self.check_events_list('mgr', 'mgr')
 
@@ -237,3 +272,13 @@ class TestEvent(APITestCase):
     def test_3a_support_event_completed_CRUD(self):
         crud_status = {'C': False, 'R': True, 'U': True, 'D': True}
         self.check_event_CRUD('support1', 'support1', crud_status, is_completed=True)
+
+    @pytest.mark.django_db()
+    def test_4a_manager_creation_event_date_NOK(self):
+        self.check_creation_event_date_NOK('mgr', 'mgr')
+
+    @pytest.mark.django_db()
+    def test_4a_sales_creation_event_date_NOK(self):
+        self.check_creation_event_date_NOK('sales1', 'sales1')
+
+

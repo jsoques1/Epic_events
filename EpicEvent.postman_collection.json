@@ -43,7 +43,7 @@
 								},
 								{
 									"key": "password",
-									"value": "admin",
+									"value": "Epicevent1",
 									"type": "text"
 								},
 								{
@@ -55,13 +55,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/",
+							"raw": "http://localhost:8000/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"login",
 								""
 							]
 						},
@@ -115,13 +116,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/",
+							"raw": "http://localhost:8000/login/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
+								"login",
 								""
 							]
 						},
@@ -235,12 +237,12 @@
 					"formdata": [
 						{
 							"key": "first_name",
-							"value": "Foo",
+							"value": "Patrick",
 							"type": "text"
 						},
 						{
 							"key": "last_name",
-							"value": "Bar",
+							"value": "Duff",
 							"type": "text"
 						},
 						{
@@ -250,7 +252,7 @@
 						},
 						{
 							"key": "company_name",
-							"value": "Golfandco",
+							"value": "Duff",
 							"type": "text"
 						},
 						{
@@ -271,8 +273,7 @@
 						{
 							"key": "salesman",
 							"value": "2",
-							"type": "text",
-							"disabled": true
+							"type": "text"
 						}
 					]
 				},
@@ -340,22 +341,22 @@
 					"formdata": [
 						{
 							"key": "first_name",
-							"value": "John",
+							"value": "Foo",
 							"type": "text"
 						},
 						{
 							"key": "last_name",
-							"value": "Doe",
+							"value": "Bar",
 							"type": "text"
 						},
 						{
 							"key": "email",
-							"value": "John.Doe@graveyard.com",
+							"value": "Foo.Bar@email.com",
 							"type": "text"
 						},
 						{
 							"key": "company_name",
-							"value": "Tombstone",
+							"value": "Golfandco",
 							"type": "text"
 						},
 						{
@@ -369,19 +370,14 @@
 							"type": "text"
 						},
 						{
-							"key": "is_client",
+							"key": "is_signed",
 							"value": "True",
-							"type": "text"
-						},
-						{
-							"key": "salesman",
-							"value": "2",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "127.0.0.1:8000/crm/customers/3/",
+					"raw": "127.0.0.1:8000/crm/customers/1/",
 					"host": [
 						"127",
 						"0",
@@ -392,7 +388,7 @@
 					"path": [
 						"crm",
 						"customers",
-						"3",
+						"1",
 						""
 					]
 				}
@@ -524,7 +520,7 @@
 						},
 						{
 							"key": "amount",
-							"value": "999",
+							"value": "999.99",
 							"type": "text"
 						},
 						{
@@ -613,7 +609,7 @@
 						},
 						{
 							"key": "amount",
-							"value": "999",
+							"value": "999.99",
 							"type": "text"
 						},
 						{
@@ -628,13 +624,13 @@
 						},
 						{
 							"key": "salesman",
-							"value": "3",
+							"value": "2",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "127.0.0.1:8000/crm/contracts/3/",
+					"raw": "127.0.0.1:8000/crm/contracts/1/",
 					"host": [
 						"127",
 						"0",
@@ -645,7 +641,7 @@
 					"path": [
 						"crm",
 						"contracts",
-						"3",
+						"1",
 						""
 					]
 				}
@@ -757,7 +753,7 @@
 					"formdata": [
 						{
 							"key": "name",
-							"value": "Daytona racinng",
+							"value": "Daytona racing",
 							"type": "text"
 						},
 						{
@@ -782,13 +778,19 @@
 						},
 						{
 							"key": "notes",
-							"value": "",
+							"value": "notes",
 							"type": "text"
 						},
 						{
 							"key": "is_completed",
 							"value": "False",
 							"type": "text"
+						},
+						{
+							"key": "support",
+							"value": "2",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
@@ -876,7 +878,7 @@
 						},
 						{
 							"key": "contract",
-							"value": "2",
+							"value": "1",
 							"type": "text"
 						},
 						{
@@ -886,13 +888,18 @@
 						},
 						{
 							"key": "is_completed",
-							"value": "False",
+							"value": "True",
+							"type": "text"
+						},
+						{
+							"key": "support",
+							"value": "3",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "127.0.0.1:8000/crm/events/4/",
+					"raw": "127.0.0.1:8000/crm/events/1/",
 					"host": [
 						"127",
 						"0",
@@ -903,7 +910,7 @@
 					"path": [
 						"crm",
 						"events",
-						"4",
+						"1",
 						""
 					]
 				}
@@ -951,7 +958,7 @@
 						},
 						{
 							"key": "contract",
-							"value": "2",
+							"value": "1",
 							"type": "text"
 						},
 						{
@@ -967,7 +974,7 @@
 					]
 				},
 				"url": {
-					"raw": "127.0.0.1:8000/crm/events/4/",
+					"raw": "127.0.0.1:8000/crm/events/1/",
 					"host": [
 						"127",
 						"0",
@@ -978,7 +985,37 @@
 					"path": [
 						"crm",
 						"events",
-						"4",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/crm/events/1/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"crm",
+						"events",
+						"1",
 						""
 					]
 				}

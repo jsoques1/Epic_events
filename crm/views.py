@@ -41,11 +41,7 @@ class CustomerViewSet(ModelViewSet):
     def get_queryset(self):
         customer_pk = self.kwargs.get("pk")
         if customer_pk:
-            if not Customer.objects.filter(id=customer_pk).exists():
-                logger.error(f'No customer with id {customer_pk} exists')
-                raise ValidationError(f'No customer with id {customer_pk} exists')
-            else:
-                logger.info(f'Info for customer id {customer_pk} request by {self.request.user}')
+            logger.info(f'Info for customer id {customer_pk} request by {self.request.user}')
         else:
             logger.info(f'Customer list request by {self.request.user}')
             self.queryset = Customer.objects.all()
@@ -113,11 +109,7 @@ class ContractViewSet(ModelViewSet):
     def get_queryset(self):
         contract_pk = self.kwargs.get("pk")
         if contract_pk:
-            if not Contract.objects.filter(id=contract_pk).exists():
-                logger.error(f'No contract #{contract_pk} exists')
-                raise ValidationError(f'No contract #{contract_pk} exists')
-            else:
-                logger.info(f'Info for contract id {contract_pk} request by {self.request.user}')
+            logger.info(f'Info for contract id {contract_pk} request by {self.request.user}')
         else:
             logger.info(f'Contract list request by {self.request.user}')
             self.queryset = Contract.objects.all()
@@ -159,6 +151,7 @@ class ContractViewSet(ModelViewSet):
                 raise ValidationError(f'Payment due {payment_due} is elapsed')
             if is_signed and not customer.is_signed:
                 customer.is_signed = True
+                logger.info(f'Contract #{instance.id} has been signed, so the customer is automatically signed also')
             if salesman != serializer.validated_data['salesman'] and self.request_user.role != MGMT:
                 logger.error('Salesman reassignment can be done only by MGMT team')
                 raise ValidationError('Salesman reassignment can be done only by MGMT team')
@@ -184,12 +177,8 @@ class EventViewSet(ModelViewSet):
     def get_queryset(self):
         event_pk = self.kwargs.get("pk")
         if event_pk:
-            if not Event.objects.filter(id=event_pk).exists():
-                logger.error(f'No event #{event_pk} exists')
-                raise ValidationError(f'No event #{event_pk} exists')
-            else:
-                logger.info(f'Info for event id {event_pk} request by {self.request.user}')
-                self.queryset = Event.objects.filter(id=int(event_pk))
+            logger.info(f'Info for event id {event_pk} request by {self.request.user}')
+            self.queryset = Event.objects.filter(id=int(event_pk))
         else:
             logger.info(f'Event list request by {self.request.user}')
             self.queryset = Event.objects.all()
