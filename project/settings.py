@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-from decouple import Csv, config
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,9 +83,6 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
-    # "DEFAULT_PERMISSION_CLASSES": [
-    #     "rest_framework.permissions.AllowAny",
-    # ],
 }
 
 SIMPLE_JWT = {
@@ -145,7 +142,7 @@ TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -163,8 +160,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'format': {
-            'format': '{levelname} {module} {message} {asctime}',
-            'style': '{',
+            "format": "[%(asctime)s] [%(name)s] %(levelname)s - %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
     'handlers': {
@@ -176,10 +173,9 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
+        '': {
+            'level': 'DEBUG',
             'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
         },
     },
 }

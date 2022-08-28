@@ -90,7 +90,3 @@ Les captures d'écran des derniers rapports de tests sont disponibles dans le do
 
 - [Couverture] coverage_report.png 
 
-
-Optionnel
-
-- [flake8] flake8.png

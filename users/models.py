@@ -13,8 +13,7 @@ class User(AbstractUser):
     date_updated = models.DateTimeField(auto_now=True)
     phone_number = models.CharField(max_length=20)
     mobile_number = models.CharField(max_length=20)
-    role = models.CharField(choices=
-        [
+    role = models.CharField(choices=[
             (MGMT, MGMT),
             (SALES, SALES),
             (SUPPORT, SUPPORT),
