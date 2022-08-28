@@ -280,5 +280,3 @@ class TestEvent(APITestCase):
     @pytest.mark.django_db()
     def test_4a_sales_creation_event_date_NOK(self):
         self.check_creation_event_date_NOK('sales1', 'sales1')
-
-
