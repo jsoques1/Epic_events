@@ -525,7 +525,7 @@
 						},
 						{
 							"key": "payment_due",
-							"value": "2022-10-01",
+							"value": "2023-10-01",
 							"type": "text"
 						},
 						{
@@ -758,7 +758,7 @@
 						},
 						{
 							"key": "event_date",
-							"value": "2022-10-01 12:00:00",
+							"value": "2023-10-01 12:00:00",
 							"type": "text"
 						},
 						{
@@ -773,7 +773,7 @@
 						},
 						{
 							"key": "contract",
-							"value": "2",
+							"value": "1",
 							"type": "text"
 						},
 						{
@@ -785,12 +785,6 @@
 							"key": "is_completed",
 							"value": "False",
 							"type": "text"
-						},
-						{
-							"key": "support",
-							"value": "2",
-							"type": "text",
-							"disabled": true
 						}
 					]
 				},
@@ -858,7 +852,7 @@
 					"formdata": [
 						{
 							"key": "name",
-							"value": "Daytona racinng",
+							"value": "Daytona racing",
 							"type": "text"
 						},
 						{
