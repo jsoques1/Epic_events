@@ -146,6 +146,9 @@ class ContractViewSet(ModelViewSet):
             customer = serializer.validated_data['customer']
             payment_due = serializer.validated_data['payment_due']
             is_signed = serializer.validated_data['is_signed']
+            if not customer.is_signed:
+                logger.error(f'The customer is still a prospect')
+                raise ValidationError(f'The customer is still a prospect')
             if payment_due < date.today():
                 logger.error(f'Payment due {payment_due} is elapsed')
                 raise ValidationError(f'Payment due {payment_due} is elapsed')
