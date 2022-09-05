@@ -1,6 +1,8 @@
 from datetime import date, datetime
 from django.utils import timezone
 
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsManager
 from .serializers import CustomerSerializer, ContractSerializer, EventSerializer
@@ -37,6 +39,9 @@ class CustomerViewSet(ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated, IsManager | HasCustomerPermissions]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['^first_name', '^last_name', '^email', '^company_name']
+    filterset_fields = ['is_signed']
 
     def get_queryset(self):
         customer_pk = self.kwargs.get("pk")
@@ -105,6 +110,13 @@ class ContractViewSet(ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
     permission_classes = [IsAuthenticated, IsManager | HasContractPermissions]
+    search_fields = ['^customer__first_name', '^customer__last_name', '^customer__email', '^customer__company_name']
+    filterset_fields = {
+        'date_created': ['gte', 'lte'],
+        'payment_due': ['gte', 'lte'],
+        'amount': ['gte', 'lte'],
+        'is_signed': ['exact'],
+    }
 
     def get_queryset(self):
         contract_pk = self.kwargs.get("pk")
@@ -177,6 +189,16 @@ class EventViewSet(ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated, IsManager | HasEventPermissions]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = [
+        '^contract__customer__first_name', '^contract__customer__last_name', '^contract__customer__email',
+        '^contract__customer__company_name', '^name', '^location'
+    ]
+    filterset_fields = {
+        'event_date': ['gte', 'lte'],
+        'attendees': ['gte', 'lte'],
+        'is_completed': ['exact'],
+    }
 
     def get_queryset(self):
         event_pk = self.kwargs.get("pk")
