@@ -252,7 +252,7 @@
 						},
 						{
 							"key": "company_name",
-							"value": "Duff",
+							"value": "Duff3",
 							"type": "text"
 						},
 						{
@@ -307,7 +307,7 @@
 					}
 				],
 				"url": {
-					"raw": "127.0.0.1:8000/crm/customers/3/",
+					"raw": "127.0.0.1:8000/crm/customers/1/",
 					"host": [
 						"127",
 						"0",
@@ -318,7 +318,7 @@
 					"path": [
 						"crm",
 						"customers",
-						"3",
+						"1",
 						""
 					]
 				}
@@ -406,53 +406,8 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "first_name",
-							"value": "John",
-							"type": "text"
-						},
-						{
-							"key": "last_name",
-							"value": "Doe",
-							"type": "text"
-						},
-						{
-							"key": "email",
-							"value": "John.Doe@graveyard.com",
-							"type": "text"
-						},
-						{
-							"key": "company_name",
-							"value": "Graveyard",
-							"type": "text"
-						},
-						{
-							"key": "phone_number",
-							"value": "33-123456789",
-							"type": "text"
-						},
-						{
-							"key": "mobile_number",
-							"value": "33-623456789",
-							"type": "text"
-						},
-						{
-							"key": "is_client",
-							"value": "True",
-							"type": "text"
-						},
-						{
-							"key": "salesman",
-							"value": "2",
-							"type": "text"
-						}
-					]
-				},
 				"url": {
-					"raw": "127.0.0.1:8000/crm/customers/2/",
+					"raw": "127.0.0.1:8000/crm/customers/1/",
 					"host": [
 						"127",
 						"0",
@@ -463,7 +418,7 @@
 					"path": [
 						"crm",
 						"customers",
-						"2",
+						"1",
 						""
 					]
 				}
@@ -570,7 +525,7 @@
 					}
 				],
 				"url": {
-					"raw": "127.0.0.1:8000/crm/contracts/2/",
+					"raw": "127.0.0.1:8000/crm/contracts/1/",
 					"host": [
 						"127",
 						"0",
@@ -581,7 +536,7 @@
 					"path": [
 						"crm",
 						"contracts",
-						"2",
+						"1",
 						""
 					]
 				}
@@ -690,7 +645,7 @@
 					]
 				},
 				"url": {
-					"raw": "127.0.0.1:8000/crm/contracts/4/",
+					"raw": "127.0.0.1:8000/crm/contracts/1/",
 					"host": [
 						"127",
 						"0",
@@ -701,7 +656,7 @@
 					"path": [
 						"crm",
 						"contracts",
-						"4",
+						"1",
 						""
 					]
 				}
@@ -818,7 +773,7 @@
 					}
 				],
 				"url": {
-					"raw": "127.0.0.1:8000/crm/events/2/",
+					"raw": "127.0.0.1:8000/crm/events/1/",
 					"host": [
 						"127",
 						"0",
@@ -829,7 +784,7 @@
 					"path": [
 						"crm",
 						"events",
-						"2",
+						"1",
 						""
 					]
 				}
@@ -877,12 +832,12 @@
 						},
 						{
 							"key": "notes",
-							"value": "Pink champagne ",
+							"value": "Pink champagne",
 							"type": "text"
 						},
 						{
 							"key": "is_completed",
-							"value": "True",
+							"value": "False",
 							"type": "text"
 						},
 						{
@@ -927,7 +882,7 @@
 					"formdata": [
 						{
 							"key": "name",
-							"value": "Daytona racinng",
+							"value": "Daytona racing",
 							"type": "text"
 						},
 						{
