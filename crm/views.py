@@ -111,12 +111,7 @@ class ContractViewSet(ModelViewSet):
     serializer_class = ContractSerializer
     permission_classes = [IsAuthenticated, IsManager | HasContractPermissions]
     search_fields = ['^customer__first_name', '^customer__last_name', '^customer__email', '^customer__company_name']
-    filterset_fields = {
-        'date_created': ['gte', 'lte'],
-        'payment_due': ['gte', 'lte'],
-        'amount': ['gte', 'lte'],
-        'is_signed': ['exact'],
-    }
+    filterset_fields = ['is_signed']
 
     def get_queryset(self):
         contract_pk = self.kwargs.get("pk")
@@ -194,11 +189,7 @@ class EventViewSet(ModelViewSet):
         '^contract__customer__first_name', '^contract__customer__last_name', '^contract__customer__email',
         '^contract__customer__company_name', '^name', '^location'
     ]
-    filterset_fields = {
-        'event_date': ['gte', 'lte'],
-        'attendees': ['gte', 'lte'],
-        'is_completed': ['exact'],
-    }
+    filterset_fields = ['is_completed']
 
     def get_queryset(self):
         event_pk = self.kwargs.get("pk")
